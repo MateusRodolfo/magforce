@@ -120,22 +120,22 @@ def plot_1D_Bxyz_z(x, y, zs, my_collection):
 
 # functions for plotting B 2D
 
-def plot_2D_Byz_x(x, ys, zs, my_collection, modes=['quiver']):
+def plot_2D_Byz_x(x, ys, zs, my_collection, modes=['stream']):
     """Evaluates the value of x and plots the Bfield in that plane
     mode is a list with possible contents being ['quiver','stream','surface']"""
 
     lenys = len(ys)
     lenzs = len(zs)
 
-    POS = array([(eval(str(x)), y, z) for z in zs for y in ys])
+    POS_raw = array([(eval(str(x)), y, z) for z in zs for y in ys])
 
-    Bfield = array([my_collection.getB(pos) for pos in POS])
+    Bfield_raw = array([my_collection.getB(pos) for pos in POS_raw])
 
-    POS = POS.reshape(lenys, lenzs, 3)
+    POS = POS_raw.reshape(lenys, lenzs, 3)
     POSy = POS[:, :, 1]
     POSz = POS[:, :, 2]
 
-    Bfield = Bfield.reshape(lenys, lenzs, 3)
+    Bfield = Bfield_raw.reshape(lenys, lenzs, 3)
     Bfieldx = Bfield[:, :, 0]
     Bfieldy = Bfield[:, :, 1]
     Bfieldz = Bfield[:, :, 2]
@@ -149,10 +149,11 @@ def plot_2D_Byz_x(x, ys, zs, my_collection, modes=['quiver']):
 
     if 'quiver' in modes:
         fig_q = figure(num=f'''B x = {x} quiver''')
-        ax_q = fig_q.add_subplot(aspect=1, title=f'''x = {x}''')
-        ByBz_norm = array(list(map(normalize, Bfield[:, :, [1, 2]])))
+        ax_q = fig_q.add_subplot(aspect=1, title=f'''B direction, x = {x}''')
+        ByBz_norm = array(list(map(normalize, Bfield_raw[:, [1, 2]])))
         By, Bz = ByBz_norm[:, 0], ByBz_norm[:, 1]
-        ax_q.quiver(POSy, POSz, By, Bz, units='xy')
+        POSy_raw, POSz_raw = POS_raw[:, 1], POS_raw[:, 2]
+        ax_q.quiver(POSy_raw, POSz_raw, By, Bz, units='xy')
         ax_q.set_xlabel('y [mm]')
         ax_q.set_ylabel('z [mm]')
 
@@ -175,22 +176,22 @@ def plot_2D_Byz_x(x, ys, zs, my_collection, modes=['quiver']):
         ax_s_z.set_zlabel('Bz [mT]')
 
 
-def plot_2D_Bxz_y(xs, y, zs, my_collection, modes=['quiver']):
+def plot_2D_Bxz_y(xs, y, zs, my_collection, modes=['stream']):
     """Evaluates the value of y and plots the Bfield in that plane
     mode is a list with possible contents being ['quiver','stream','surface']"""
 
     lenxs = len(xs)
     lenzs = len(zs)
 
-    POS = array([(x, eval(str(y)), z) for z in zs for x in xs])
+    POS_raw = array([(x, eval(str(y)), z) for z in zs for x in xs])
 
-    Bfield = array([my_collection.getB(pos) for pos in POS])
+    Bfield_raw = array([my_collection.getB(pos) for pos in POS_raw])
 
-    POS = POS.reshape(lenxs, lenzs, 3)
+    POS = POS_raw.reshape(lenxs, lenzs, 3)
     POSx = POS[:, :, 0]
     POSz = POS[:, :, 2]
 
-    Bfield = Bfield.reshape(lenxs, lenzs, 3)
+    Bfield = Bfield_raw.reshape(lenxs, lenzs, 3)
     Bfieldx = Bfield[:, :, 0]
     Bfieldy = Bfield[:, :, 1]
     Bfieldz = Bfield[:, :, 2]
@@ -204,10 +205,11 @@ def plot_2D_Bxz_y(xs, y, zs, my_collection, modes=['quiver']):
 
     if 'quiver' in modes:
         fig_q = figure(num=f'''B y = {y} quiver''')
-        ax_q = fig_q.add_subplot(aspect=1, title=f'''y = {y}''')
-        BxBz_norm = array(list(map(normalize, Bfield[:, :, [0, 2]])))
+        ax_q = fig_q.add_subplot(aspect=1, title=f'''B direction, y = {y}''')
+        BxBz_norm = array(list(map(normalize, Bfield_raw[:, [0, 2]])))
         Bx, Bz = BxBz_norm[:, 0], BxBz_norm[:, 1]
-        ax_q.quiver(POSx, POSz, Bx, Bz, units='xy')
+        POSx_raw, POSz_raw = POS_raw[:, 0], POS_raw[:, 2]
+        ax_q.quiver(POSx_raw, POSz_raw, Bx, Bz, units='xy')
         ax_q.set_xlabel('x [mm]')
         ax_q.set_ylabel('z [mm]')
 
@@ -230,22 +232,22 @@ def plot_2D_Bxz_y(xs, y, zs, my_collection, modes=['quiver']):
         ax_s_z.set_zlabel('Bz [mT]')
 
 
-def plot_2D_Bxy_z(xs, ys, z, my_collection, modes=['quiver']):
+def plot_2D_Bxy_z(xs, ys, z, my_collection, modes=['stream']):
     """Evaluates the value of z and plots the Bfield in that plane
     mode is a list with possible contents being ['quiver','stream','surface']"""
 
     lenxs = len(xs)
     lenys = len(ys)
 
-    POS = array([(x, y, eval(str(z))) for y in ys for x in xs])
+    POS_raw = array([(x, y, eval(str(z))) for y in ys for x in xs])
 
-    Bfield = array([my_collection.getB(pos) for pos in POS])
+    Bfield_raw = array([my_collection.getB(pos) for pos in POS_raw])
 
-    POS = POS.reshape(lenxs, lenys, 3)
+    POS = POS_raw.reshape(lenxs, lenys, 3)
     POSx = POS[:, :, 0]
     POSy = POS[:, :, 1]
 
-    Bfield = Bfield.reshape(lenxs, lenys, 3)
+    Bfield = Bfield_raw.reshape(lenxs, lenys, 3)
     Bfieldx = Bfield[:, :, 0]
     Bfieldy = Bfield[:, :, 1]
     Bfieldz = Bfield[:, :, 2]
@@ -258,13 +260,12 @@ def plot_2D_Bxy_z(xs, ys, z, my_collection, modes=['quiver']):
         ax_s.set_ylabel('y [mm]')
 
     if 'quiver' in modes:
-        fig_quiver = figure(num=f'''B z = {z} quiver''')
-        ax_q = fig_quiver.add_subplot(aspect=1, title=f'''z = {z}''')
-        BxBy = Bfield[:, :, [0, 1]].reshape(len(xs) * len(ys), 2)
-        BxBy_norm = array(list(map(normalize, BxBy)))
-        BxBy_norm = BxBy_norm.reshape(len(xs), len(ys), 2)
+        fig_q = figure(num=f'''B z = {z} quiver''')
+        ax_q = fig_q.add_subplot(aspect=1, title=f'''B direction, z = {z}''')
+        BxBy_norm = array(list(map(normalize, Bfield_raw[:, [0, 1]])))
         Bx, By = BxBy_norm[:, 0], BxBy_norm[:, 1]
-        ax_q.quiver(POSx, POSy, Bx, By, units='xy')
+        POSx_raw, POSy_raw = POS_raw[:, 0], POS_raw[:, 1]
+        ax_q.quiver(POSx_raw, POSy_raw, Bx, By, units='xy')
         ax_q.set_xlabel('x [mm]')
         ax_q.set_ylabel('y [mm]')
 
@@ -430,22 +431,22 @@ def plot_1D_Fxyz_z(x, y, zs, my_collection, sample):
 
 # functions for plotting F 2D
 
-def plot_2D_Fyz_x(x, ys, zs, my_collection, sample, modes=['quiver']):
+def plot_2D_Fyz_x(x, ys, zs, my_collection, sample, modes=['stream']):
     """Evaluates the value of x and plots the force in that plane
     mode is a list with possible contents being ['quiver','stream','surface']"""
 
     lenys = len(ys)
     lenzs = len(zs)
 
-    POS = array([(eval(str(x)), y, z) for z in zs for y in ys])
+    POS_raw = array([(eval(str(x)), y, z) for z in zs for y in ys])
 
-    FOR = array([getF(pos, my_collection, sample) for pos in POS])
+    FOR_raw = array([getF(pos, my_collection, sample) for pos in POS_raw])
 
-    POS = POS.reshape(lenys, lenzs, 3)
+    POS = POS_raw.reshape(lenys, lenzs, 3)
     POSy = POS[:, :, 1]
     POSz = POS[:, :, 2]
 
-    FOR = FOR.reshape(lenys, lenzs, 3)
+    FOR = FOR_raw.reshape(lenys, lenzs, 3)
     FORx = FOR[:, :, 0]
     FORy = FOR[:, :, 1]
     FORz = FOR[:, :, 2]
@@ -459,10 +460,11 @@ def plot_2D_Fyz_x(x, ys, zs, my_collection, sample, modes=['quiver']):
 
     if 'quiver' in modes:
         fig_q = figure(num=f'''F x = {x} quiver''')
-        ax_q = fig_q.add_subplot(aspect=1, title=f'''x = {x}''')
-        FyFz_norm = array(list(map(normalize, FOR[:, :, [1, 2]])))
+        ax_q = fig_q.add_subplot(aspect=1, title=f'''F direction, x = {x}''')
+        FyFz_norm = array(list(map(normalize, FOR_raw[:, [1, 2]])))
         Fy, Fz = FyFz_norm[:, 0], FyFz_norm[:, 1]
-        ax_q.quiver(POSy, POSz, Fy, Fz, units='xy')
+        POSy_raw, POSz_raw = POS_raw[:, 1], POS_raw[:, 2]
+        ax_q.quiver(POSy_raw, POSz_raw, Fy, Fz, units='xy')
         ax_q.set_xlabel('y [mm]')
         ax_q.set_ylabel('z [mm]')
 
@@ -485,22 +487,22 @@ def plot_2D_Fyz_x(x, ys, zs, my_collection, sample, modes=['quiver']):
         ax_s_z.set_zlabel('Fz [N]')
 
 
-def plot_2D_Fxz_y(xs, y, zs, my_collection, sample, modes=['quiver']):
+def plot_2D_Fxz_y(xs, y, zs, my_collection, sample, modes=['stream']):
     """Evaluates the value of y and plots the force in that plane
     mode is a list with possible contents being ['quiver','stream','surface']"""
 
     lenxs = len(xs)
     lenzs = len(zs)
 
-    POS = array([(x, eval(str(y)), z) for z in zs for x in xs])
+    POS_raw = array([(x, eval(str(y)), z) for z in zs for x in xs])
 
-    FOR = array([getF(pos, my_collection, sample) for pos in POS])
+    FOR_raw = array([getF(pos, my_collection, sample) for pos in POS_raw])
 
-    POS = POS.reshape(lenxs, lenzs, 3)
+    POS = POS_raw.reshape(lenxs, lenzs, 3)
     POSx = POS[:, :, 0]
     POSz = POS[:, :, 2]
 
-    FOR = FOR.reshape(lenxs, lenzs, 3)
+    FOR = FOR_raw.reshape(lenxs, lenzs, 3)
     FORx = FOR[:, :, 0]
     FORy = FOR[:, :, 1]
     FORz = FOR[:, :, 2]
@@ -514,10 +516,11 @@ def plot_2D_Fxz_y(xs, y, zs, my_collection, sample, modes=['quiver']):
 
     if 'quiver' in modes:
         fig_q = figure(num=f'''F y = {y} quiver''')
-        ax_q = fig_q.add_subplot(aspect=1, title=f'''y = {y}''')
-        FxFz_norm = array(list(map(normalize, FOR[:, :, [0, 2]])))
+        ax_q = fig_q.add_subplot(aspect=1, title=f'''F direction, y = {y}''')
+        FxFz_norm = array(list(map(normalize, FOR_raw[:, [0, 2]])))
         Fx, Fz = FxFz_norm[:, 0], FxFz_norm[:, 1]
-        ax_q.quiver(POSx, POSz, Fx, Fz, units='xy')
+        POSx_raw, POSz_raw = POS_raw[:, 0], POS_raw[:, 2]
+        ax_q.quiver(POSx_raw, POSz_raw, Fx, Fz, units='xy')
         ax_q.set_xlabel('x [mm]')
         ax_q.set_ylabel('z [mm]')
 
@@ -540,22 +543,22 @@ def plot_2D_Fxz_y(xs, y, zs, my_collection, sample, modes=['quiver']):
         ax_s_z.set_zlabel('Fz [N]')
 
 
-def plot_2D_Fxy_z(xs, ys, z, my_collection, sample, modes=['quiver']):
+def plot_2D_Fxy_z(xs, ys, z, my_collection, sample, modes=['stream']):
     """Evaluates the value of z and plots the force in that plane
     mode is a list with possible contents being ['quiver','stream','surface']"""
 
+    lenxs = len(xs)
     lenys = len(ys)
-    lenzs = len(zs)
 
-    POS = array([(x, y, eval(str(z))) for y in ys for x in xs])
+    POS_raw = array([(x, y, eval(str(z))) for y in ys for x in xs])
 
-    FOR = array([getF(pos, my_collection, sample) for pos in POS])
+    FOR_raw = array([getF(pos, my_collection, sample) for pos in POS_raw])
 
-    POS = POS.reshape(len(xs), len(ys), 3)
+    POS = POS_raw.reshape(lenxs, lenys, 3)
     POSx = POS[:, :, 0]
     POSy = POS[:, :, 1]
 
-    FOR = FOR.reshape(len(xs), len(ys), 3)
+    FOR = FOR_raw.reshape(lenxs, lenys, 3)
     FORx = FOR[:, :, 0]
     FORy = FOR[:, :, 1]
     FORz = FOR[:, :, 2]
@@ -569,10 +572,11 @@ def plot_2D_Fxy_z(xs, ys, z, my_collection, sample, modes=['quiver']):
 
     if 'quiver' in modes:
         fig_q = figure(num=f'''F z = {z} quiver''')
-        ax_q = fig_q.add_subplot(aspect=1, title=f'''z = {z}''')
-        FxFy_norm = array(list(map(normalize, FOR[:, :, [0, 1]])))
+        ax_q = fig_q.add_subplot(aspect=1, title=f'''F direction, z = {z}''')
+        FxFy_norm = array(list(map(normalize, FOR_raw[:, [0, 1]])))
         Fx, Fy = FxFy_norm[:, 0], FxFy_norm[:, 1]
-        ax_q.quiver(POSx, POSy, Fx, Fy, units='xy')
+        POSx_raw, POSy_raw = POS_raw[:, 0], POS_raw[:, 1]
+        ax_q.quiver(POSx_raw, POSy_raw, Fx, Fy, units='xy')
         ax_q.set_xlabel('x [mm]')
         ax_q.set_ylabel('y [mm]')
 
