@@ -1,52 +1,43 @@
 from numpy import linspace, meshgrid, array, gradient, round, zeros, sqrt
-from magpylib.source.magnet import Cylinder
-from magpylib import Collection, displaySystem
 from matplotlib.pyplot import figure, show
 from matplotlib.patches import Rectangle, Circle
-
 from datetime import datetime
+from magpylib import displaySystem
+from magnet_collection import c
 
+# start timer
 startTime = datetime.now()
+print(f'''{datetime.now()} : starting simulation\n''')
 
-
+# functions
 def normal(Fx, Fy):
+    """Normalizes the vectors size for 2D plotting
+    Accepts 1D arrays as input"""
+
     Fxn = Fx / sqrt(Fx ** 2 + Fy ** 2)
     Fyn = Fy / sqrt(Fx ** 2 + Fy ** 2)
 
     return Fxn, Fyn
 
 
-def getBmesh(collection, X, Y, Z):  # Example vector field
-    I, J, K = X.shape
-    BX = zeros((I, J, K))
-    BY = zeros((I, J, K))
-    BZ = zeros((I, J, K))
-    for k in range(K):
-        for j in range(J):
-            for i in range(I):
-                x, y, z = X[i, j, k], Y[i, j, k], Z[i, j, k]
-                Bx, By, Bz = collection.getB([x, y, z])
-                BX[i, j, k] = Bx
-                BY[i, j, k] = By
-                BZ[i, j, k] = Bz
-    return array([BX, BY, BZ])
-
-
 def jacB(collection, x, y, z):
-    delta = 0.01
+    """from a point xyz and the collection of magnets returns a 3x3 jacobian matrix on that point
+    works with 6 auxiliar points, in x,y,z +- infinitesimal"""
+
+    delta = 0.01                               # infinitesimal
     xs = linspace(x - delta, x + delta, 3)
     ys = linspace(y - delta, y + delta, 3)
     zs = linspace(z - delta, z + delta, 3)
 
-    dd = zeros((3, 3))
+    dd = zeros((3, 3))                         # creation of 3x3 matrix of zeros, to have values replaced
 
-    fp0 = collection.getB([x, y, z])
-    fxm = collection.getB([x - delta, y, z])
-    fxp = collection.getB([x + delta, y, z])
-    fym = collection.getB([x, y - delta, z])
-    fyp = collection.getB([x, y + delta, z])
-    fzm = collection.getB([x, y, z - delta])
-    fzp = collection.getB([x, y, z + delta])
+    fp0 = collection.getB([x, y, z])           # center point
+    fxm = collection.getB([x - delta, y, z])   # point x - delta
+    fxp = collection.getB([x + delta, y, z])   # point x + delta
+    fym = collection.getB([x, y - delta, z])   # point y - delta
+    fyp = collection.getB([x, y + delta, z])   # point y + delta
+    fzm = collection.getB([x, y, z - delta])   # point z - delta
+    fzp = collection.getB([x, y, z + delta])   # point z + delta
 
     dx = array([fxm, fp0, fxp])
     dd[0, 0] = gradient(dx[:, 0], xs)[1]  # dUdx
@@ -69,9 +60,11 @@ def jacB(collection, x, y, z):
 
 
 def getF(collection, point):
+    """gets the magnetic force"""
     x, y, z = point
 
-    M = collection.getB([x, y, z])
+    B = collection.getB([x, y, z])
+    M = B
     Mx, My, Mz = M
 
     dd = jacB(collection, x, y, z)
@@ -93,66 +86,69 @@ def getF(collection, point):
 
     return array([Fx, Fy, Fz])
 
-
-# fixed magnet parameters
-M = [0, 0, 500]  # magnetization (Mx, My, Mz)
-d = 1
-H = 2
-dim = [d, H]
-magnet = Cylinder(mag=M, dim=dim, pos=[0, 0, 0])
-c = Collection(magnet)
-
-from magnet_collection import c
-
 # creation of 3D space
-parts = 25
-limit = 10
-xs = linspace(-limit, limit, parts)
-ys = linspace(-limit, limit, parts)
-zs = linspace(-limit, limit, parts)
-
+print(f'''{datetime.now()} : creating 3D space\n''')
+parts_x = 33
+parts_y = 33
+parts_z = 33
+limit_x = 10
+limit_y = 10
+limit_z = 10
+xs = linspace(-limit_x, limit_x, parts_x)
+ys = linspace(-limit_y, limit_y, parts_y)
+zs = linspace(-limit_z, limit_z, parts_z)
 POS = array([(x, y, z) for x in xs for y in ys for z in zs])
+
+# calculation of force field
+print(f'''{datetime.now()} : calculating force field\n''')
 FOR = array([getF(c, pos) for pos in POS])
 
-POS = POS.reshape(parts, parts, parts, 3)
-FOR = FOR.reshape(parts, parts, parts, 3)
-
+POS = POS.reshape(parts_x, parts_y, parts_z, 3)
 POSx = POS[:, :, :, 0]
 POSy = POS[:, :, :, 1]
 POSz = POS[:, :, :, 2]
 
+FOR = FOR.reshape(parts_x, parts_y, parts_z, 3)
 FORx = FOR[:, :, :, 0]
 FORy = FOR[:, :, :, 1]
 FORz = FOR[:, :, :, 2]
 
 # plotting
+print(f'''{datetime.now()} : plotting\n''')
+
+# 3D
 # fig3d = figure(num='3D')
 # ax = fig3d.add_subplot(projection='3d')
 # ax.quiver(POSx, POSy, POSz, FORx, FORy, FORz, normalize=True)
 
+# 2D
+# x = 0
 fig2d = figure(num='x = 0')
 ax = fig2d.add_subplot(aspect=1, title='x = 0')
-p = int(parts / 2)
+p = int(parts_x / 2)
 Py, Pz = POSy[p, :, :], POSz[p, :, :]
 Fy, Fz = normal(FORy[p, :, :], FORz[p, :, :])
-ax.quiver(Py, Pz, Fy, Fz)
-ax.add_artist(Rectangle((-d/2, -H/2), d, H, color='magenta', alpha=1, fill=False))
+ax.quiver(Py, Pz, Fy, Fz, units='xy')
+# ax.add_artist(Rectangle((-d/2, -H/2), d, H, color='magenta', alpha=1, fill=False))
 
+# y = 0
 fig2d = figure(num='y = 0')
 ax = fig2d.add_subplot(aspect=1, title='y = 0')
-p = int(parts / 2)
+p = int(parts_x / 2)
 Px, Pz = POSx[:, p, :], POSz[:, p, :]
 Fx, Fz = normal(FORx[:, p, :], FORz[:, p, :])
-ax.quiver(Px, Pz, Fx, Fz)
-ax.add_artist(Rectangle((-d/2, -H/2), d, H, color='magenta', alpha=1, fill=False))
+ax.quiver(Px, Pz, Fx, Fz, units='xy')
+# ax.add_artist(Rectangle((-d/2, -H/2), d, H, color='magenta', alpha=1, fill=False))
 
+# z = 0
 fig2d = figure(num='z = 0')
 ax = fig2d.add_subplot(aspect=1, title='z = 0')
-p = int(parts / 2)
+p = int(parts_x / 2)
 Px, Py = POSx[:, :, p], POSy[:, :, p]
 Fx, Fy = normal(FORx[:, :, p], FORy[:, :, p])
-ax.quiver(Px, Py, Fx, Fy)
-ax.add_artist(Circle((0, 0), d/2, color='magenta', alpha=1, fill=False))
+ax.quiver(Px, Py, Fx, Fy, units='xy')
+# ax.add_artist(Circle((0, 0), d/2, color='magenta', alpha=1, fill=False))
 
-print(datetime.now() - startTime)
+print(f'''{datetime.now()} : finish\n''')
+print(f'''{datetime.now() - startTime} total runtime''')
 show()
