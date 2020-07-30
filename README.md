@@ -1,7 +1,7 @@
 # internship_lncmi_rodolfo
 GitHub repository for sharing codes developed during Rodolfo's internship at LNCMI
 
-v0.1-alpha Functional version of the code.
+v0.1-alpha : functional version of the code.
 
 Made by Mateus Rodolfo during an internship at LNCMI (CNRS) supervised by Eric Beaugnon.
 
