@@ -13,13 +13,10 @@ ys = linspace(-30, 30, 1000)
 zs = linspace(0, 30, 1000)
 x, y, z = (0, 0, 0)
 
-# plotting.plot_1D_Bxyz_x(xs, y, z, my_collection)
-# plotting.plot_1D_Bxyz_y(x, ys, z, my_collection)
-# plotting.plot_1D_Bxyz_z(x, y, zs, my_collection)
+# plotting.plot_1D_along_x(xs, y, z, my_collection, sample=sample, BF='BF')
+# plotting.plot_1D_along_y(x, ys, z, my_collection, sample=sample, BF='BF')
+# plotting.plot_1D_along_z(x, y, zs, my_collection, sample=sample, BF='BF')
 
-# plotting.plot_1D_Fxyz_x(xs, y, z, my_collection, sample)
-# plotting.plot_1D_Fxyz_y(x, ys, z, my_collection, sample)
-# plotting.plot_1D_Fxyz_z(x, y, zs, my_collection, sample)
 
 # Plotting 2D
 xs = linspace(-30, 30, 35)
@@ -27,12 +24,15 @@ ys = linspace(-30, 30, 35)
 zs = linspace(0, 30, 35)
 x, y, z = (0, 0, 0)
 
-# plotting.plot_2D_Byz_x(x, ys, zs, my_collection, modes=['stream', 'quiver'])
-# plotting.plot_2D_Bxz_y(xs, y, zs, my_collection, modes=['stream', 'quiver'])
-# plotting.plot_2D_Bxy_z(xs, ys, z, my_collection, modes=['stream', 'quiver'])
+# plotting.plot_2D_plane_x(x, ys, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF')
+# plotting.plot_2D_plane_y(xs, y, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF')
+# plotting.plot_2D_plane_z(xs, ys, z, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF')
 
-# plotting.plot_2D_Fyz_x(x, ys, zs, my_collection, sample, modes=['stream', 'quiver'])
-# plotting.plot_2D_Fxz_y(xs, y, zs, my_collection, sample, modes=['stream', 'quiver'])
-plotting.plot_2D_Fxy_z(xs, ys, z, my_collection, sample, modes=['stream', 'quiver'])
+# Plotting 3D
+xs = linspace(-30, 30, 7)
+ys = linspace(-30, 30, 7)
+zs = linspace(0, 30, 7)
+
+plotting.plot_3D(xs, ys, zs, my_collection, sample=sample, BF='BF')
 
 show()

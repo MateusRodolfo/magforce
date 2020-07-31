@@ -74,6 +74,23 @@ def jac(foo, x, y, z):
     return dd
 
 
+def getM(point, my_collection, sample):
+    mu0 = 4*pi*(10**(-7))                      # vacuum permeability in H/m
+
+    n = sample.demagnetizing_factor            # coefficient de champ démagnétisant
+    M_saturation = sample.M_saturation         # Ms in T
+
+    B = my_collection.getB(point) / 1000       # B comes in mT, /1000 for T
+
+    H = B / mu0                                # transform B in H
+    M = H / n                                  # formule Beaugnon
+
+    if linalg.norm(M) > M_saturation:
+        M = normalize(M) * M_saturation
+
+    return M
+
+
 def getF(point, my_collection, sample):
     """
     Gets the magnetic force in a point xyz given in mm for a ferromagnetic sphere
@@ -83,21 +100,9 @@ def getF(point, my_collection, sample):
     """
     x, y, z = point
 
-    mu0 = 4*pi*(10**(-7))                      # vacuum permeability in H/m
-
-    n = sample.demagnetizing_factor            # coefficient de champ démagnétisant
     V = sample.volume                          # vol in m3, 1mm radius
-    M_saturation = sample.M_saturation     # Ms in T
 
-    B = my_collection.getB([x, y, z]) / 1000   # B comes in mT, /1000 for T
-
-    H = B / mu0                                # transform B in H
-    M = H / n                                  # formule Beaugnon
-
-    if linalg.norm(M) > M_saturation:
-        M = normalize(M) * M_saturation
-
-    Mx, My, Mz = M
+    Mx, My, Mz = getM(point, my_collection, sample)
 
     dd = jac(my_collection.getB, x, y, z)
 
