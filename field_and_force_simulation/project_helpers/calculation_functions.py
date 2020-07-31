@@ -1,8 +1,38 @@
 # made with magpylib v2.3.0b
+
 from numpy import array, round, zeros, pi, linalg
 
 
 def normalize(vector):
+    """
+    -----------
+    DESCRIPTION
+    -----------
+
+    Transforms a vector into unitary
+
+    ----------
+    PARAMETERS
+    ----------
+
+    :param vector: numpy.array | input vector, any dimension
+    :return: numpy.array | output vector, same dimension as input but norm 1
+
+    -------
+    EXAMPLE
+    -------
+    >>> from numpy import arrray
+
+    >>> vector3d = array([0,0,2])
+
+    >>> normalize(vector3d)
+    array([0., 0., 1.])
+
+    >>> vector2d = array([1,1])
+
+    >>> normalize(vector2d)
+    array([0.70710678, 0.70710678])
+    """
     norm = linalg.norm(vector)
 
     if norm != 0:
@@ -13,16 +43,32 @@ def normalize(vector):
 
 def jac(foo, x, y, z):
     """
+    -----------
+    DESCRIPTION
+    -----------
+
     From a point xyz and function returns a 3x3 jacobian matrix of that function on that point
     works with 6 auxiliar points, in x,y,z +- infinitesimal
-    function foo takes as argument a 1d array like [x, y, z]
-    
+    function foo takes as argument a 1d array like [x, y, z] and returns
+
     jac uses central difference derivatives
-    
-    returns a 3x3 array like
-    [[dUdx, dUdy, dUdz]
-     [dVdx, dVdy, dVdz]
-     [dWdx, dWdy, dWdz]]
+
+    ----------
+    PARAMETERS
+    ----------
+
+    :param foo: function | needs to return
+    :param x: float
+    :param y: float
+    :param z: float
+    :return: 3x3 array like
+                [[dUdx, dUdy, dUdz]
+                [dVdx, dVdy, dVdz]
+                [dWdx, dWdy, dWdz]]
+
+    -------
+    EXAMPLE
+    -------
 
     >>> def foo(point):
     ...     x, y, z = point
@@ -74,37 +120,88 @@ def jac(foo, x, y, z):
     return dd
 
 
-def getM(point, my_collection, sample):
+def getM(point, collection, sample):
+    """
+    -----------
+    DESCRIPTION
+    -----------
+
+    Gets the magnetization of a sample if it would to be put on the point point around a collection of magnets
+
+    ----------
+    PARAMETERS
+    ----------
+
+    :param point: numpy.array [mm]
+    :param collection: magpylib.Collection
+    :param sample: Sample
+    :return: numpy.array [A/m]
+
+    -------
+    EXAMPLE
+    -------
+
+    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
+
+    >>> point=(0,0,1)
+
+    >>> getM(point,my_collection,sample)
+
+    >>> array([     0.        ,      0.        , 741977.47732813])
+
+    """
     mu0 = 4*pi*(10**(-7))                      # vacuum permeability in H/m
 
-    n = sample.demagnetizing_factor            # coefficient de champ démagnétisant
-    M_saturation = sample.M_saturation         # Ms in T
+    n = sample.demagnetizing_factor            # demagnetizing factor
+    M_saturation = sample.M_saturation         # Ms in A/m
 
-    B = my_collection.getB(point) / 1000       # B comes in mT, /1000 for T
+    B = collection.getB(point) / 1000          # magpylib getB returns B in mT, /1000 for T
 
-    H = B / mu0                                # transform B in H
-    M = H / n                                  # formule Beaugnon
+    H = B / mu0                                # transform B[T] in H[A/m]
+    M = H / n                                  # simplification for getting M out of H in ferromagnetic
 
-    if linalg.norm(M) > M_saturation:
+    if linalg.norm(M) > M_saturation:          # check if M surpasses the saturation
         M = normalize(M) * M_saturation
 
-    return M
+    return M                                   # returns (Mx, My, Mz) in [A/m]
 
 
-def getF(point, my_collection, sample):
+def getF(point, collection, sample):
     """
+    -----------
+    DESCRIPTION
+    -----------
+
     Gets the magnetic force in a point xyz given in mm for a ferromagnetic sphere
 
-    >>> getF([0,0,0])
-    array([0., 0., 0.])
+    ----------
+    PARAMETERS
+    ----------
+
+    :param point: numpy.array
+    :param collection: magpylib.Collection
+    :param sample: Sample
+    :return: numpy.array [N]
+
+    -------
+    EXAMPLE
+    -------
+
+    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
+
+    >>> point=(0,0,1)
+
+    >>> getF(point,my_collection,sample)
+
+    >>> array([ 0.        ,  0.        , -0.49650668])
     """
     x, y, z = point
 
-    V = sample.volume                          # vol in m3, 1mm radius
+    V = sample.volume                              # sample volume [m3]
 
-    Mx, My, Mz = getM(point, my_collection, sample)
+    Mx, My, Mz = getM(point, collection, sample)   # sample magnetization [A/m]
 
-    dd = jac(my_collection.getB, x, y, z)
+    dd = jac(collection.getB, x, y, z)             # jacobian of B field in given point
 
     dUdx = dd[0, 0]
     dUdy = dd[0, 1]
@@ -124,4 +221,4 @@ def getF(point, my_collection, sample):
 
     result = round(array([Fx, Fy, Fz]) * V, 10)
 
-    return result
+    return result                                 # returns (Fx, Fy, Fz) in N
