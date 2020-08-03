@@ -1,7 +1,7 @@
 # internship_lncmi_rodolfo
 GitHub repository for sharing codes developed during Rodolfo's internship at LNCMI
 
-v1.1-beta
+v1.2-beta
 
 Functional version of the code.
 
