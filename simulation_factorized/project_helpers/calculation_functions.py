@@ -134,7 +134,7 @@ def getM(point, collection, sample):
 
     :param point: numpy.array [mm]
     :param collection: magpylib.Collection
-    :param sample: Sample
+    :param sample: dictionary with 'demagnetizing_factor', 'volume' and 'M_saturation' keys, respectively in [], [m3], [A/m]
     :return: numpy.array [A/m]
 
     -------
@@ -152,8 +152,8 @@ def getM(point, collection, sample):
     """
     mu0 = 4*pi*(10**(-7))                      # vacuum permeability in H/m
 
-    n = sample.demagnetizing_factor            # demagnetizing factor
-    M_saturation = sample.M_saturation         # Ms in A/m
+    n = sample['demagnetizing_factor']         # demagnetizing factor
+    M_saturation = sample['M_saturation']      # Ms in A/m
 
     B = collection.getB(point) / 1000          # magpylib getB returns B in mT, /1000 for T
 
@@ -180,7 +180,7 @@ def getF(point, collection, sample):
 
     :param point: numpy.array
     :param collection: magpylib.Collection
-    :param sample: Sample
+    :param sample: dictionary with 'demagnetizing_factor', 'volume' and 'M_saturation' keys, respectively in [], [m3], [A/m]
     :return: numpy.array [N]
 
     -------
@@ -197,7 +197,7 @@ def getF(point, collection, sample):
     """
     x, y, z = point
 
-    V = sample.volume                              # sample volume [m3]
+    V = sample['volume']                           # sample volume [m3]
 
     Mx, My, Mz = getM(point, collection, sample)   # sample magnetization [A/m]
 

@@ -1,19 +1,16 @@
 # made with magpylib v2.3.0b
 
 from matplotlib.pyplot import figure
+from numpy import pi
 
-from magpylib.source.magnet import Cylinder, Sphere
-from magpylib.source.current import Circular
+from magpylib.source.magnet import Cylinder
 from magpylib import Collection, displaySystem
 
-from project_helpers.sample_classes import Sample
-
-
 # Sample Definition
-sample = Sample(material='Fe',
-                temperature=300,
-                shape='sphere',
-                dim=[2])
+demagnetizing_factor = 1/3             # sphere
+volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]
+M_saturation = 1.400e6                 # Ms Co room temperature [A/m]
+sample = {'demagnetizing_factor': demagnetizing_factor, 'volume': volume, 'M_saturation': M_saturation}
 
 # Magnet collection definition
 m1 = Cylinder(mag=[0, 0, 1000], dim=[5, 20], pos=[0, 0, -10])
@@ -21,11 +18,9 @@ my_collection = Collection(m1)
 
 display_collection = 0
 if display_collection:
-    sample_sphere = Sphere(mag=[0, 0, 1000], dim=sample.radius, pos=[0, 0, 0])
-    my_collection_with_sample = Collection(my_collection, sample_sphere)
-
     fig = figure(num='System Display')
     ax = fig.add_subplot(projection='3d')
-    displaySystem(my_collection_with_sample, direc=True, markers=[(0, 0, 0)], suppress=False, subplotAx=ax)
+    displaySystem(my_collection, direc=True, markers=[(0, 0, 0)], suppress=False, subplotAx=ax)
 
-# sample and my_collection will be imported in simulation_example.py
+
+# sample and my_collection will be imported in simulation_unfactorized_example.py

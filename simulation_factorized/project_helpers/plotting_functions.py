@@ -4,6 +4,7 @@ from numpy import array, savetxt, vstack, hstack
 from matplotlib.pyplot import figure, tight_layout
 from mpl_toolkits.mplot3d import axes3d
 from datetime import datetime
+from os import mkdir
 
 from project_helpers.calculation_functions import normalize, getF
 
@@ -142,6 +143,14 @@ def plot_1D_along_x(xs=array([]), y=0, z=0, collection=None, sample=None, BF='BF
 
     # if user wants to save data in CSV
     if saveCSV:
+        try:
+            # Create target Directory
+            dirname = "CSV_output"
+            mkdir(dirname)
+            print(f"Directory {dirname} created, saving CSV file there")
+        except FileExistsError:
+            print(f"Directory {dirname} already exists, saving CSV file there")
+
         # prepare CSV data with POS
         POS_titles = array([['x', 'y', 'z'],
                             ['[mm]', '[mm]', '[mm]']])
@@ -298,6 +307,14 @@ def plot_1D_along_y(x=0, ys=array([]), z=0, collection=None, sample=None, BF='BF
 
     # if user wants to save data in CSV
     if saveCSV:
+        try:
+            # Create target Directory
+            dirname = "CSV_output"
+            mkdir(dirname)
+            print(f"Directory {dirname} created, saving CSV file there")
+        except FileExistsError:
+            print(f"Directory {dirname} already exists, saving CSV file there")
+
         # prepare CSV data with POS
         POS_titles = array([['x', 'y', 'z'],
                             ['[mm]', '[mm]', '[mm]']])
@@ -454,6 +471,14 @@ def plot_1D_along_z(x=0, y=0, zs=array([]), collection=None, sample=None, BF='BF
 
     # if user wants to save data in CSV
     if saveCSV:
+        try:
+            # Create target Directory
+            dirname = "CSV_output"
+            mkdir(dirname)
+            print(f"Directory {dirname} created, saving CSV file there")
+        except FileExistsError:
+            print(f"Directory {dirname} already exists, saving CSV file there")
+
         # prepare CSV data with POS
         POS_titles = array([['x', 'y', 'z'],
                             ['[mm]', '[mm]', '[mm]']])
@@ -671,6 +696,14 @@ def plot_2D_plane_x(x=0, ys=array([]), zs=array([]), collection=None, sample=Non
 
     # if user wants to save data in CSV
     if saveCSV:
+        try:
+            # Create target Directory
+            dirname = "CSV_output"
+            mkdir(dirname)
+            print(f"Directory {dirname} created, saving CSV file there")
+        except FileExistsError:
+            print(f"Directory {dirname} already exists, saving CSV file there")
+
         # prepare CSV data with POS
         POS_titles = array([['x', 'y', 'z'],
                             ['[mm]', '[mm]', '[mm]']])
@@ -886,6 +919,14 @@ def plot_2D_plane_y(xs=array([]), y=0, zs=array([]), collection=None, sample=Non
 
     # if user wants to save data in CSV
     if saveCSV:
+        try:
+            # Create target Directory
+            dirname = "CSV_output"
+            mkdir(dirname)
+            print(f"Directory {dirname} created, saving CSV file there")
+        except FileExistsError:
+            print(f"Directory {dirname} already exists, saving CSV file there")
+
         # prepare CSV data with POS
         POS_titles = array([['x', 'y', 'z'],
                             ['[mm]', '[mm]', '[mm]']])
@@ -1101,6 +1142,14 @@ def plot_2D_plane_z(xs=array([]), ys=array([]), z=0, collection=None, sample=Non
 
     # if user wants to save data in CSV
     if saveCSV:
+        try:
+            # Create target Directory
+            dirname = "CSV_output"
+            mkdir(dirname)
+            print(f"Directory {dirname} created, saving CSV file there")
+        except FileExistsError:
+            print(f"Directory {dirname} already exists, saving CSV file there")
+
         # prepare CSV data with POS
         POS_titles = array([['x', 'y', 'z'],
                             ['[mm]', '[mm]', '[mm]']])
@@ -1219,6 +1268,14 @@ def plot_3D(xs=array([]), ys=array([]), zs=array([]), collection=None, sample=No
 
     # if user wants to save data in CSV
     if saveCSV:
+        try:
+            # Create target Directory
+            dirname = "CSV_output"
+            mkdir(dirname)
+            print(f"Directory {dirname} created, saving CSV file there")
+        except FileExistsError:
+            print(f"Directory {dirname} already exists, saving CSV file there")
+
         # prepare CSV data with POS
         POS_titles = array([['x', 'y', 'z'],
                             ['[mm]', '[mm]', '[mm]']])
