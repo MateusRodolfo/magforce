@@ -19,15 +19,13 @@ def normalize(vector):
     -------
     EXAMPLE
     -------
-    >>> from numpy import arrray
+    >>> from numpy import array
 
     >>> vector3d = array([0,0,2])
-
     >>> normalize(vector3d)
     array([0., 0., 1.])
 
     >>> vector2d = array([1,1])
-
     >>> normalize(vector2d)
     array([0.70710678, 0.70710678])
     """
@@ -139,13 +137,27 @@ def getM(point, collection, sample):
     EXAMPLE
     -------
 
-    >>> # define a my_collection (magpylib.collection) and a sample (dict)
+    >>> # imports
+    >>> from numpy import linspace, pi
+    >>> from magpylib.source.magnet import Cylinder
+    >>> from magpylib import Collection
+    >>> import magforce as mgf
 
+    >>> # Sample Definition
+    >>> demagnetizing_factor = 1/3             # sphere
+    >>> volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]
+    >>> M_saturation = 1.400e6                 # Ms Co room temperature [A/m]
+    >>> sample = {'demagnetizing_factor': demagnetizing_factor, 'volume': volume, 'M_saturation': M_saturation}
+
+    >>> # Magnet collection definition
+    >>> m1 = Cylinder(mag=[0, 0, 1000], dim=[5, 20], pos=[0, 0, -10])
+    >>> my_collection = Collection(m1)
+
+    >>> # creation of space
     >>> point = (0,0,1)
 
     >>> getM(point,my_collection,sample)
-
-    >>> array([     0.        ,      0.        , 741977.47732813])
+    array([     0.        ,      0.        , 741977.47732813])
 
     """
     mu0 = 4*pi*(10**(-7))                      # vacuum permeability in H/m
@@ -185,13 +197,27 @@ def getF(point, collection, sample):
     EXAMPLE
     -------
 
-    >>> # define a my_collection (magpylib.collection) and a sample (dict)
+    >>> # imports
+    >>> from numpy import linspace, pi
+    >>> from magpylib.source.magnet import Cylinder
+    >>> from magpylib import Collection
+    >>> import magforce as mgf
 
+    >>> # Sample Definition
+    >>> demagnetizing_factor = 1/3             # sphere
+    >>> volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]
+    >>> M_saturation = 1.400e6                 # Ms Co room temperature [A/m]
+    >>> sample = {'demagnetizing_factor': demagnetizing_factor, 'volume': volume, 'M_saturation': M_saturation}
+
+    >>> # Magnet collection definition
+    >>> m1 = Cylinder(mag=[0, 0, 1000], dim=[5, 20], pos=[0, 0, -10])
+    >>> my_collection = Collection(m1)
+
+    >>> # creation of space
     >>> point=(0,0,1)
 
     >>> getF(point,my_collection,sample)
-
-    >>> array([ 0.        ,  0.        , -0.49650668])
+    array([  0.        ,   0.        , -31.77642724])
     """
     x, y, z = point
 

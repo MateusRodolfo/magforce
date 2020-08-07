@@ -2,3 +2,5 @@
 setup.cfg
 setup.py
 magforce\__init__.py
+magforce\calculation.py
+magforce\plotting.py
