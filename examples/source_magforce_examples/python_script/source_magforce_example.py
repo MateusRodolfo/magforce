@@ -1714,6 +1714,6 @@ z = 0
 xs = linspace(-30, 30, 7)
 ys = linspace(-30, 30, 7)
 zs = linspace(0, 30, 7)
-plot_3D(xs, ys, zs, my_collection, sample=sample, BF='BF', saveCSV=False)
+# plot_3D(xs, ys, zs, my_collection, sample=sample, BF='BF', saveCSV=False)
 
 show()
