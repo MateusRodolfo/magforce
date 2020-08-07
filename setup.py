@@ -8,11 +8,12 @@ setup(
   author = 'Mateus Rodolfo',                   # Type in your name
   author_email = 'mateusgrodolfo@gmail.com',      # Type in your E-Mail
   url = 'https://www.linkedin.com/in/mateusgrodolfo/',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/user/reponame/archive/v_01.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/MateusRodolfo/magforce/archive/v1.5-beta.tar.gz',    # I explain this later on
   keywords = ['python', 'python3', 'magnet'],   # Keywords that define your package best
   install_requires=[            # I get to this in a second
-          'validators',
-          'beautifulsoup4',
+          'magpylib',
+          'numpy',
+          'matplotlib',
       ],
   classifiers=[
     'Development Status :: 4 - Beta',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
