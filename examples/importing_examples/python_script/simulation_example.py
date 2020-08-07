@@ -1,4 +1,4 @@
-from numpy import linspace
+from numpy import linspace, pi
 from matplotlib.pyplot import show, figure
 from magpylib.source.magnet import Cylinder
 from magpylib import Collection, displaySystem
@@ -27,7 +27,7 @@ if display_collection:
 # Plotting 1D
 xs = linspace(-30, 30, 1000)
 y, z = (0, 0)
-# mfp.plot_1D_along_x(xs, y, z, my_collection, sample=sample, BF='BF', saveCSV=False)
+mfp.plot_1D_along_x(xs, y, z, my_collection, sample=sample, BF='BF', saveCSV=False)
 
 ys = linspace(-30, 30, 1000)
 x, z = (0, 0)
