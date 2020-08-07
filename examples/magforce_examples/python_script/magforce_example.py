@@ -24,29 +24,34 @@ if display_collection:
     displaySystem(my_collection, direc=True, markers=[(0, 0, 0)], suppress=False, subplotAx=ax)
 
 
-# Plotting 1D
+# Plotting 1D along x, y, z
+
 xs = linspace(-30, 30, 1000)
-y, z = (0, 0)
+y = 0
+z = 0
 # mgf.plot_1D_along_x(xs, y, z, my_collection, sample=sample, BF='BF', saveCSV=False)
 
+x = 0
 ys = linspace(-30, 30, 1000)
-x, z = (0, 0)
+z = 0
 # mgf.plot_1D_along_y(x, ys, z, my_collection, sample=sample, BF='BF', saveCSV=False)
 
+x = 0
+y = 0
 zs = linspace(0, 30, 1000)
-y, z = (0, 0)
 # mgf.plot_1D_along_z(x, y, zs, my_collection, sample=sample, BF='BF', saveCSV=False)
 
 
-# Plotting 2D
+# Plotting 2D on x, y, z plane
+
+x = 0
 ys = linspace(-30, 30, 35)
 zs = linspace(0, 30, 35)
-x = 0
 # mgf.plot_2D_plane_x(x, ys, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF', saveCSV=False)
 
 xs = linspace(-30, 30, 35)
-zs = linspace(0, 30, 35)
 y = 0
+zs = linspace(0, 30, 35)
 # mgf.plot_2D_plane_y(xs, y, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF', saveCSV=False)
 
 xs = linspace(-30, 30, 35)
@@ -54,7 +59,9 @@ ys = linspace(-30, 30, 35)
 z = 0
 # mgf.plot_2D_plane_z(xs, ys, z, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF', saveCSV=False)
 
+
 # Plotting 3D
+
 xs = linspace(-30, 30, 7)
 ys = linspace(-30, 30, 7)
 zs = linspace(0, 30, 7)
