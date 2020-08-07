@@ -140,16 +140,16 @@ def getM(point, collection, sample):
 
     :param point: numpy.array [mm]
     :param collection: magpylib.Collection
-    :param sample: dictionary with 'demagnetizing_factor', 'volume' and 'M_saturation' keys, respectively in [], [m3], [A/m]
+    :param sample: dict | keys 'demagnetizing_factor' [], 'volume' [m3] and 'M_saturation' [A/m]
     :return: numpy.array [A/m]
 
     -------
     EXAMPLE
     -------
 
-    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
+    >>> # define a my_collection (magpylib.collection) and a sample (dict)
 
-    >>> point=(0,0,1)
+    >>> point = (0,0,1)
 
     >>> getM(point,my_collection,sample)
 
@@ -186,14 +186,14 @@ def getF(point, collection, sample):
 
     :param point: numpy.array
     :param collection: magpylib.Collection
-    :param sample: dictionary with 'demagnetizing_factor', 'volume' and 'M_saturation' keys, respectively in [], [m3], [A/m]
+    :param sample: dict | keys 'demagnetizing_factor' [], 'volume' [m3] and 'M_saturation' [A/m]
     :return: numpy.array [N]
 
     -------
     EXAMPLE
     -------
 
-    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
+    >>> # define a my_collection (magpylib.collection) and a sample (dict)
 
     >>> point=(0,0,1)
 
@@ -261,15 +261,15 @@ def plot_1D_along_x(xs=array([]), y=0, z=0, collection=None, sample=None, BF='BF
     >>> # imports
     >>> from numpy import linspace
     >>> from matplotlib.pyplot import show
-    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
-    >>> import project_helpers.plotting_functions as pf
+    >>> import magforce.source.plotting as mfp
+    >>> # define a my_collection (magpylib.collection) and a sample (dict)
     >>> # creation of space
     >>> xs = linspace(-30, 30, 1000)
     >>> y, z = (0, 0)
     >>> # plotting B and F along x with y=0; z=0
-    >>> pf.plot_1D_along_x(xs, y, z, my_collection, sample=sample, BF='BF')
+    >>> mfp.plot_1D_along_x(xs, y, z, my_collection, sample=sample, BF='BF')
     >>> # plotting B along x with y=z; z=0
-    >>> pf.plot_1D_along_x(xs, 'z', z, my_collection, BF='B')
+    >>> mfp.plot_1D_along_x(xs, 'z', z, my_collection, BF='B')
     """
 
     # generate points for B and F calculation
@@ -425,15 +425,15 @@ def plot_1D_along_y(x=0, ys=array([]), z=0, collection=None, sample=None, BF='BF
     >>> # imports
     >>> from numpy import linspace
     >>> from matplotlib.pyplot import show
-    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
-    >>> import project_helpers.plotting_functions as pf
+    >>> import magforce.source.plotting as mfp
+    >>> # define a my_collection (magpylib.collection) and a sample (dict)
     >>> # creation of space
     >>> ys = linspace(-30, 30, 1000)
     >>> x, z = (0, 0)
     >>> # plotting B and F along y with x=0; z=0
-    >>> pf.plot_1D_along_y(x, ys, z, my_collection, sample=sample, BF='BF')
+    >>> mfp.plot_1D_along_y(x, ys, z, my_collection, sample=sample, BF='BF')
     >>> # plotting B along y with x=z; z=0
-    >>> pf.plot_1D_along_y('z', ys, z, my_collection, BF='B')
+    >>> mfp.plot_1D_along_y('z', ys, z, my_collection, BF='B')
     """
 
     # generate points for B and F calculation
@@ -589,15 +589,15 @@ def plot_1D_along_z(x=0, y=0, zs=array([]), collection=None, sample=None, BF='BF
     >>> # imports
     >>> from numpy import linspace
     >>> from matplotlib.pyplot import show
-    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
-    >>> import project_helpers.plotting_functions as pf
+    >>> import magforce.source.plotting as mfp
+    >>> # define a my_collection (magpylib.collection) and a sample (dict)
     >>> # creation of space
     >>> zs = linspace(-30, 30, 1000)
     >>> x, y = (0, 0)
     >>> # plotting B and F along z with x=0; y=0
-    >>> pf.plot_1D_along_y(x, y, zs, my_collection, sample=sample, BF='BF')
+    >>> mfp.plot_1D_along_y(x, y, zs, my_collection, sample=sample, BF='BF')
     >>> # plotting B along z with x=y; y=0
-    >>> pf.plot_1D_along_y('y', y, zs, my_collection, BF='B')
+    >>> mfp.plot_1D_along_y('y', y, zs, my_collection, BF='B')
     """
 
     # generate points for B and F calculation
@@ -756,16 +756,16 @@ def plot_2D_plane_x(x=0, ys=array([]), zs=array([]), collection=None, sample=Non
     >>> # imports
     >>> from numpy import linspace
     >>> from matplotlib.pyplot import show
-    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
-    >>> import project_helpers.plotting_functions as pf
+    >>> import magforce.source.plotting as mfp
+    >>> # define a my_collection (magpylib.collection) and a sample (dict)
     >>> # creation of space
     >>> ys = linspace(-30, 30, 35)
     >>> zs = linspace(0, 30, 35)
     >>> x = 0
     >>> # plotting B and F on plane x=0 on all three modes
-    >>> pf.plot_2D_plane_x(x, ys, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF')
+    >>> mfp.plot_2D_plane_x(x, ys, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF')
     >>> # plotting B on plane x=y on surface mode
-    >>> pf.plot_2D_plane_x('y', ys, zs, my_collection, modes=['surface'], BF='B')
+    >>> mfp.plot_2D_plane_x('y', ys, zs, my_collection, modes=['surface'], BF='B')
     """
 
     # get array length to reshape B or F array correctly
@@ -979,16 +979,16 @@ def plot_2D_plane_y(xs=array([]), y=0, zs=array([]), collection=None, sample=Non
     >>> # imports
     >>> from numpy import linspace
     >>> from matplotlib.pyplot import show
-    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
-    >>> import project_helpers.plotting_functions as pf
+    >>> import magforce.source.plotting as mfp
+    >>> # define a my_collection (magpylib.collection) and a sample (dict)
     >>> # creation of space
     >>> xs = linspace(-30, 30, 35)
     >>> zs = linspace(0, 30, 35)
     >>> y = 0
     >>> # plotting B and F on plane y=0 on all three modes
-    >>> pf.plot_2D_plane_x(xs, y, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF')
+    >>> mfp.plot_2D_plane_x(xs, y, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF')
     >>> # plotting B on plane y=z on surface mode
-    >>> pf.plot_2D_plane_x(xs, 'z', zs, my_collection, modes=['surface'], BF='B')
+    >>> mfp.plot_2D_plane_x(xs, 'z', zs, my_collection, modes=['surface'], BF='B')
     """
 
     # get array length to reshape B or F array correctly
@@ -1202,16 +1202,16 @@ def plot_2D_plane_z(xs=array([]), ys=array([]), z=0, collection=None, sample=Non
     >>> # imports
     >>> from numpy import linspace
     >>> from matplotlib.pyplot import show
-    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
-    >>> import project_helpers.plotting_functions as pf
+    >>> import magforce.source.plotting as mfp
+    >>> # define a my_collection (magpylib.collection) and a sample (dict)
     >>> # creation of space
     >>> xs = linspace(-30, 30, 35)
     >>> ys = linspace(-30, 30, 35)
     >>> z = 0
     >>> # plotting B and F on plane z=0 on all three modes
-    >>> pf.plot_2D_plane_x(xs, ys, z, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF')
+    >>> mfp.plot_2D_plane_x(xs, ys, z, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF')
     >>> # plotting B on plane z=x on surface mode
-    >>> pf.plot_2D_plane_x(xs, ys, 'x', my_collection, modes=['surface'], BF='B')
+    >>> mfp.plot_2D_plane_x(xs, ys, 'x', my_collection, modes=['surface'], BF='B')
     """
 
     # get array length to reshape B or F array correctly
@@ -1425,16 +1425,16 @@ def plot_3D(xs=array([]), ys=array([]), zs=array([]), collection=None, sample=No
     >>> # imports
     >>> from numpy import linspace
     >>> from matplotlib.pyplot import show
-    >>> from setup_magnet_sample.setup_magnet_sample_example import sample, my_collection
-    >>> import project_helpers.plotting_functions as pf
+    >>> import magforce.source.plotting as mfp
+    >>> # define a my_collection (magpylib.collection) and a sample (dict)
     >>> # creation of space
     >>> xs = linspace(-30, 30, 7)
     >>> ys = linspace(-30, 30, 7)
     >>> zs = linspace(0, 30, 7)
     >>> # plotting B and F
-    >>> pf.plot_3D(xs, ys, zs, my_collection, sample=sample, BF='BF')
+    >>> mfp.plot_3D(xs, ys, zs, my_collection, sample=sample, BF='BF')
     >>> # plotting B
-    >>> pf.plot_3D(xs, ys, zs, my_collection, BF='B')
+    >>> mfp.plot_3D(xs, ys, zs, my_collection, BF='B')
     """
 
     # get array length to reshape B or F array correctly

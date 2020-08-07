@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
   name = 'magforce',         # How you named your package folder (MyLib)
   packages = ['magforce'],   # Chose the same as "name"
-  version = '1.6',      # Start with a small number and increase it with every change you make
+  version = '1.7',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'free python3 library for easy calculation and plotting of magnetic forces',   # Give a short description about your library
   author = 'Mateus Rodolfo',                   # Type in your name
   author_email = 'mateusgrodolfo@gmail.com',      # Type in your E-Mail
   url = 'https://www.linkedin.com/in/mateusgrodolfo/',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/MateusRodolfo/magforce/archive/v1.6-beta.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/MateusRodolfo/magforce/archive/v1.7-beta.tar.gz',    # I explain this later on
   keywords = ['python', 'python3', 'magnet'],   # Keywords that define your package best
   install_requires=[            # I get to this in a second
           'magpylib',

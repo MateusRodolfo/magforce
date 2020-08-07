@@ -3,7 +3,7 @@ from matplotlib.pyplot import show, figure
 from magpylib.source.magnet import Cylinder
 from magpylib import Collection, displaySystem
 
-import magforce.source.plotting as mfp
+import magforce as mgf
 
 # Sample Definition
 
@@ -27,37 +27,37 @@ if display_collection:
 # Plotting 1D
 xs = linspace(-30, 30, 1000)
 y, z = (0, 0)
-mfp.plot_1D_along_x(xs, y, z, my_collection, sample=sample, BF='BF', saveCSV=False)
+# mgf.plot_1D_along_x(xs, y, z, my_collection, sample=sample, BF='BF', saveCSV=False)
 
 ys = linspace(-30, 30, 1000)
 x, z = (0, 0)
-# mfp.plot_1D_along_y(x, ys, z, my_collection, sample=sample, BF='BF', saveCSV=False)
+# mgf.plot_1D_along_y(x, ys, z, my_collection, sample=sample, BF='BF', saveCSV=False)
 
 zs = linspace(0, 30, 1000)
 y, z = (0, 0)
-# mfp.plot_1D_along_z(x, y, zs, my_collection, sample=sample, BF='BF', saveCSV=False)
+# mgf.plot_1D_along_z(x, y, zs, my_collection, sample=sample, BF='BF', saveCSV=False)
 
 
 # Plotting 2D
 ys = linspace(-30, 30, 35)
 zs = linspace(0, 30, 35)
 x = 0
-# mfp.plot_2D_plane_x(x, ys, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF', saveCSV=False)
+# mgf.plot_2D_plane_x(x, ys, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF', saveCSV=False)
 
 xs = linspace(-30, 30, 35)
 zs = linspace(0, 30, 35)
 y = 0
-# mfp.plot_2D_plane_y(xs, y, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF', saveCSV=False)
+# mgf.plot_2D_plane_y(xs, y, zs, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF', saveCSV=False)
 
 xs = linspace(-30, 30, 35)
 ys = linspace(-30, 30, 35)
 z = 0
-# mfp.plot_2D_plane_z(xs, ys, z, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF', saveCSV=False)
+# mgf.plot_2D_plane_z(xs, ys, z, my_collection, sample=sample, modes=['stream', 'quiver', 'surface'], BF='BF', saveCSV=False)
 
 # Plotting 3D
 xs = linspace(-30, 30, 7)
 ys = linspace(-30, 30, 7)
 zs = linspace(0, 30, 7)
-# mfp.plot_3D(xs, ys, zs, my_collection, sample=sample, BF='BF', saveCSV=False)
+# mgf.plot_3D(xs, ys, zs, my_collection, sample=sample, BF='BF', saveCSV=False)
 
 show()
