@@ -1,9 +1,7 @@
 # magforce
 [GitHub](https://github.com/MateusRodolfo/magforce) for more information.
 
-Codes developed during Rodolfo's internship at LNCMI.
-
-Development of a free python3 library for easy calculation and plotting of magnetic forces.
+Free Python3 library for easy calculation and plotting of magnetic forces.
 
 Made by [Mateus Rodolfo](https://www.linkedin.com/in/mateusgrodolfo/) during an internship at LNCMI (CNRS) supervised by Eric Beaugnon.
 
