@@ -7,4 +7,4 @@ Made by [Mateus Rodolfo](https://www.linkedin.com/in/mateusgrodolfo/) during an 
 
 Uses the [magpylib](https://www.sciencedirect.com/science/article/pii/S2352711020300170) python library. Thanks [Mr Ortner](https://www.linkedin.com/in/michael-ortner-b6b724143/) for all  the help provided.
 
-[Examples files](https://github.com/MateusRodolfo/magforce/tree/master/examples) using the source code (no imports), using the library as an import as well as magpylib examples for magnet setup.
+[Examples files](https://github.com/MateusRodolfo/magforce/tree/master/examples) of magforce as well as magpylib examples for magnet setup.
