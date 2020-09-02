@@ -137,27 +137,35 @@ def getM(point, collection, sample):
     EXAMPLE
     -------
 
-    >>> # imports
-    >>> from numpy import linspace, pi
-    >>> from magpylib.source.magnet import Cylinder
-    >>> from magpylib import Collection
-    >>> import magforce as mgf
+    # imports
+        >>> from numpy import linspace, pi
+        >>> from magpylib.source.magnet import Cylinder
+        >>> from magpylib import Collection
+        >>> import magforce as mgf
 
-    >>> # Sample Definition
-    >>> demagnetizing_factor = 1/3             # sphere
-    >>> volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]
-    >>> M_saturation = 1.400e6                 # Ms Co room temperature [A/m]
-    >>> sample = {'demagnetizing_factor': demagnetizing_factor, 'volume': volume, 'M_saturation': M_saturation}
+    # sample Definition
+        >>> demagnetizing_factor = 1/3             # sphere
+        >>> volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]
+        >>> M_saturation = 1.400e6                 # Ms Co room temperature [A/m]
+        >>> sample = {'demagnetizing_factor': demagnetizing_factor, 'volume': volume, 'M_saturation': M_saturation}
 
-    >>> # Magnet collection definition
-    >>> m1 = Cylinder(mag=[0, 0, 1000], dim=[5, 20], pos=[0, 0, -10])
-    >>> my_collection = Collection(m1)
+    # magnet collection definition
+        >>> m1 = Cylinder(mag=[0, 0, 1300],
+        ...               dim=[10, 20],
+        ...               pos=[0, 0, -20])  # center is at z = -20mm
 
-    >>> # creation of space
-    >>> point = (0,0,1)
+        >>> m2 = Cylinder(mag=[0, 0, 1300],
+        ...               dim=[10, 20],
+        ...               pos=[0, 0, 20]) # center is at z = 20mm
 
-    >>> getM(point,my_collection,sample)
-    array([     0.        ,      0.        , 741977.47732813])
+        >>> both = Collection(m1, m2)
+
+    # creation of space
+        >>> point = (0,0,1)
+
+    # calculation
+        >>> getM(point, both, sample)
+        array([     0.       ,      0.       , 292006.4216336])
 
     """
     mu0 = 4*pi*(10**(-7))                      # vacuum permeability in H/m
@@ -197,27 +205,35 @@ def getF(point, collection, sample):
     EXAMPLE
     -------
 
-    >>> # imports
-    >>> from numpy import linspace, pi
-    >>> from magpylib.source.magnet import Cylinder
-    >>> from magpylib import Collection
-    >>> import magforce as mgf
+    # imports
+        >>> from numpy import linspace, pi
+        >>> from magpylib.source.magnet import Cylinder
+        >>> from magpylib import Collection
+        >>> from magforce import getF
 
-    >>> # Sample Definition
-    >>> demagnetizing_factor = 1/3             # sphere
-    >>> volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]
-    >>> M_saturation = 1.400e6                 # Ms Co room temperature [A/m]
-    >>> sample = {'demagnetizing_factor': demagnetizing_factor, 'volume': volume, 'M_saturation': M_saturation}
+    # sample Definition
+        >>> demagnetizing_factor = 1/3             # sphere
+        >>> volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]
+        >>> M_saturation = 1.400e6                 # Ms Co room temperature [A/m]
+        >>> sample = {'demagnetizing_factor': demagnetizing_factor, 'volume': volume, 'M_saturation': M_saturation}
 
-    >>> # Magnet collection definition
-    >>> m1 = Cylinder(mag=[0, 0, 1000], dim=[5, 20], pos=[0, 0, -10])
-    >>> my_collection = Collection(m1)
+    # magnet collection definition
+        >>> m1 = Cylinder(mag=[0, 0, 1300],
+        ...               dim=[10, 20],
+        ...               pos=[0, 0, -20])  # center is at z = -20mm
 
-    >>> # creation of space
-    >>> point=(0,0,1)
+        >>> m2 = Cylinder(mag=[0, 0, 1300],
+        ...               dim=[10, 20],
+        ...               pos=[0, 0, 20]) # center is at z = 20mm
 
-    >>> getF(point,my_collection,sample)
-    array([  0.        ,   0.        , -31.77642724])
+        >>> both = Collection(m1, m2)
+
+    # creation of space
+        >>> point=(0,0,1)
+
+    # calculation
+        >>> getF(point,both,sample)
+        array([0.        , 0.        , 0.43570416])
     """
     x, y, z = point
 
