@@ -7,7 +7,7 @@ from magpylib.source.magnet import Cylinder
 from magforce import getM, getF
 
 
-# sample Definition
+# sample definition
 
 demagnetizing_factor = 1/3             # sphere
 volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]

@@ -7,12 +7,15 @@ from magpylib.source.magnet import Cylinder
 from magforce import plot_3D
 
 
-# sample Definition
+# sample definition
 
 demagnetizing_factor = 1/3             # sphere
 volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]
 M_saturation = 1.400e6                 # Ms Co room temperature [A/m]
-sample = {'demagnetizing_factor': demagnetizing_factor, 'volume': volume, 'M_saturation': M_saturation}
+
+sample = {'demagnetizing_factor': demagnetizing_factor,
+          'volume': volume,
+          'M_saturation': M_saturation}
 
 
 # magnet collection definition
