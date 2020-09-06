@@ -12,7 +12,10 @@ from magforce import getM, getF
 demagnetizing_factor = 1/3             # sphere
 volume = 4 / 3 * pi * (4 / 1000) ** 3  # V sphere r=4mm [m3]
 M_saturation = 1.400e6                 # Ms Co room temperature [A/m]
-sample = {'demagnetizing_factor': demagnetizing_factor, 'volume': volume, 'M_saturation': M_saturation}
+
+sample = {'demagnetizing_factor': demagnetizing_factor,
+          'volume': volume,
+          'M_saturation': M_saturation}
 
 
 # magnet collection definition
@@ -30,7 +33,7 @@ both = Collection(m1, m2)        # arrangement with both magnets
 
 # magnet collection visualisation
 
-displaySystem(both, suppress=True)
+displaySystem(both, suppress=False)
 
 
 # calculate magnetization imposed in the sample if its center was on a given point
@@ -59,8 +62,3 @@ print(f'F_000_m2 = {F_000_m2}')
 
 F_000_both = getF(point, both, sample)
 print(f'F_000_both = {F_000_both}')
-
-
-# display collection
-
-show()

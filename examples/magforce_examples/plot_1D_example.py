@@ -67,8 +67,3 @@ plot_1D_along_z(x=1,
                 BF='BF',
                 saveCSV=False,
                 showim=True)
-
-
-# show everything
-
-show()
