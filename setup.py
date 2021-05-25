@@ -6,25 +6,25 @@ from distutils.core import setup
 
 long_description = 'Free Python3 library for easy calculation and plotting of magnetic forces.\n\n' \
                    'Made by Mateus Rodolfo during an internship at LNCMI (CNRS) supervised by Eric Beaugnon.\n\n' \
-                   'Uses the magpylib python library. Thanks Mr Ortner for all the help provided.'
+                   'Uses the magpylib python library. Thank you Mr Michael Ortner for all the help provided with magpylib.'
 
 
 setup(
   name = 'magforce',
   packages = ['magforce'],
-  version = '3.0',
+  version = '3.1',
   license = 'agpl-3.0',
   description = 'Free Python3 library for easy calculation and plotting of magnetic forces',
   long_description = long_description,
   author = 'Mateus Rodolfo',
   author_email = 'mateusgrodolfo@gmail.com',
   url = 'https://github.com/MateusRodolfo/magforce',
-  download_url = 'https://github.com/MateusRodolfo/magforce/archive/v3.0.tar.gz',
+  download_url = 'https://github.com/MateusRodolfo/magforce/archive/v3.1.tar.gz',
   keywords = ['python', 'python3', 'magnet'],
   install_requires=[
-          'magpylib',
-          'numpy',
-          'matplotlib',
+          'magpylib<3',
+          'numpy<1.20',
+          'matplotlib<3.4',
       ],
   classifiers=[
     'Development Status :: 5 - Production/Stable',

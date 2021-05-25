@@ -1,0 +1,5 @@
+{
+  "TestFramework": "Pytest",
+  "SuppressConfigureTestFrameworkPrompt": "true",
+  "Interpreter": "Global|VisualStudio|latest magforce, python 3.7"
+}
