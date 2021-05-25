@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\examples",
-    "\\examples\\magforce_examples"
+    "\\examples\\magforce_examples\\notebook",
+    "\\magforce"
   ],
-  "SelectedNode": "\\examples\\magforce_examples\\plot_2D_example.py",
+  "SelectedNode": "\\setup.py",
   "PreviewInSolutionExplorer": false
 }
