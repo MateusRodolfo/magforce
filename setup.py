@@ -13,19 +13,19 @@ long_description = 'Free Python3 library for easy calculation and plotting of ma
 setup(
   name = 'magforce',
   packages = ['magforce'],
-  version = '3.3',
+  version = '3.4',
   license = 'agpl-3.0',
   description = 'Free Python3 library for easy calculation and plotting of magnetic forces',
   long_description = long_description,
   author = 'Mateus Rodolfo',
   author_email = 'mateusgrodolfo@gmail.com',
   url = 'https://github.com/MateusRodolfo/magforce',
-  download_url = 'https://github.com/MateusRodolfo/magforce/archive/refs/tags/3.3.tar.gz',
+  download_url = 'https://github.com/MateusRodolfo/magforce/archive/refs/tags/3.4.tar.gz',
   keywords = ['python', 'python3', 'magnet'],
   install_requires=[
-          'magpylib<3',
-          'numpy<1.20',
           'matplotlib<3.4',
+          'numpy<1.20',
+          'magpylib==2.3.0-beta',
       ],
   classifiers=[
     'Development Status :: 5 - Production/Stable',
